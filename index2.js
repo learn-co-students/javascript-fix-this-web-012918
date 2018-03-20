@@ -7,10 +7,11 @@ var cake = {
   customer: "Tommy",
   decorate: function(updateFunction) {
     var status = "Decorating with " + this.topping + ". Ready to eat soon!"
+    // debugger
     updateFunction(status)
-    setTimeout(() => {
+    setTimeout(() => (
       updateFunction(serve.apply(this, ["Happy Eating!", this.customer]))
-    }, 2000)
+    ), 2000)
   }
 }
 
@@ -25,6 +26,7 @@ var pie = {
 
 function makeCake() {
   var updateCakeStatus = updateStatus.bind(this);
+  // debugger
   mix.call(cake, updateCakeStatus)
 }
 
@@ -39,33 +41,41 @@ function updateStatus(statusText) {
 }
 
 function bake(updateFunction) {
+  // debugger
   var status = "Baking at " + this.bakeTemp + " for " + this.bakeTime
-  setTimeout(() => {
+  setTimeout(() => (
     cool.call(this, updateFunction)
-  }, 2000)
+  ), 2000)
   updateFunction(status)
 }
 
 function mix(updateFunction) {
+  // debugger
   var status = "Mixing " + this.ingredients.join(", ")
-  setTimeout(() => {
+  setTimeout(() => (
     bake.call(this, updateFunction)
-  }, 2000)
+  ), 2000)
   updateFunction(status)
 }
 
 function cool(updateFunction) {
+  // debugger
   var status = "It has to cool! Hands off!"
-  setTimeout(() => {
-    this.decorate.call(this, updateFunction)
-  }, 2000)
+  setTimeout(() => (
+    this.decorate(updateFunction)
+  ), 2000)
   updateFunction(status)
 }
 
 function makeDessert() {
   //add code here to decide which make... function to call
   //based on which link was clicked
-  this.parentNode.id === "cake" ? makeCake.call(this.parentNode) : makePie.call(this.parentNode)
+  if (this.parentNode.id === "cake") {
+    // debugger
+    makeCake.call(this.parentNode)
+  } else {
+    makePie.call(this.parentNode)
+  }
 }
 
 function serve(message, customer) {
